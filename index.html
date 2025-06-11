@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memórias desde 11 de Abril de 2025</title>
     <style>
+        /* Estilos base */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -34,6 +35,7 @@
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
+        /* Contador responsivo */
         .counter {
             display: flex;
             justify-content: space-around;
@@ -48,26 +50,116 @@
         .counter-item {
             text-align: center;
             margin: 10px;
+            min-width: 60px;
         }
 
         .counter-number {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #ff69b4;
         }
 
         .counter-label {
-            font-size: 1em;
+            font-size: 0.9em;
             color: #ccc;
+        }
+
+        /* Galeria e carrossel */
+        .gallery-section {
+            margin-top: 40px;
+        }
+
+        .gallery-section h2 {
+            color: #ff69b4;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            margin-top: 40px;
         }
 
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            color: white;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 20;
+        }
+
+        .carousel-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background: #ff69b4;
+        }
+
+        /* Cards de foto */
         .photo-card {
             position: relative;
             border-radius: 8px;
@@ -128,6 +220,7 @@
             background-color: #f44336;
         }
 
+        /* Formulário de upload */
         .upload-form {
             background-color: rgba(255, 105, 180, 0.1);
             padding: 20px;
@@ -175,7 +268,7 @@
             background-color: #ff1493;
         }
 
-        /* Elementos animados de fundo - agora com imagens */
+        /* Elementos animados de fundo */
         .falling-element {
             position: absolute;
             z-index: 1;
@@ -212,6 +305,7 @@
             font-size: 0.9em;
         }
 
+        /* Área de arrastar e soltar */
         .drop-area {
             border: 2px dashed #ff69b4;
             border-radius: 10px;
@@ -224,10 +318,63 @@
         }
 
         .drop-area.dragover {
-    background-color: #222;
-    border-color: #ff1493;
+            background-color: #222;
+            border-color: #ff1493;
         }
 
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 0 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .counter-number {
+                font-size: 1.5em;
+            }
+
+            .counter-label {
+                font-size: 0.8em;
+            }
+
+            .carousel-img {
+                height: 300px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .photo-img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .counter-item {
+                min-width: 50px;
+            }
+
+            .counter-number {
+                font-size: 1.2em;
+            }
+
+            .carousel-img {
+                height: 250px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -264,6 +411,20 @@
             </div>
         </div>
 
+        <!-- Seção do carrossel -->
+        <div class="gallery-section">
+            <h2>Destaques da Nossa Jornada</h2>
+            <div class="carousel" id="featured-carousel">
+                <div class="carousel-inner" id="carousel-inner"></div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prev-btn">&#10094;</button>
+                    <button class="carousel-btn" id="next-btn">&#10095;</button>
+                </div>
+                <div class="carousel-indicators" id="carousel-indicators"></div>
+            </div>
+        </div>
+
+        <!-- Formulário de upload -->
         <div class="upload-form">
             <h2>Adicionar Nova Foto</h2>
             <div id="drop-area" class="drop-area">
@@ -277,9 +438,12 @@
             <button id="upload-btn">Adicionar Foto</button>
         </div>
         
-
-        <div class="gallery" id="photo-gallery">
-            <!-- Fotos serão adicionadas aqui dinamicamente -->
+        <!-- Galeria de fotos -->
+        <div class="gallery-section">
+            <h2>Nossa Galeria</h2>
+            <div class="gallery" id="photo-gallery">
+                <!-- Fotos serão adicionadas aqui dinamicamente -->
+            </div>
         </div>
 
         <footer>
@@ -353,12 +517,122 @@
             }
         }
         
-        // Gerenciamento da galeria de fotos
+        // ==============================================
+        // GERENCIAMENTO DA GALERIA E CARROSSEL
+        // ==============================================
+        
+        // Array para armazenar as fotos (carregado do localStorage ou inicializado vazio)
         let photos = JSON.parse(localStorage.getItem('gallery-photos')) || [];
         
+        // Índice atual do carrossel
+        let currentCarouselIndex = 0;
+        
+        // Função para renderizar o carrossel com as fotos em destaque
+        function renderCarousel() {
+            const carouselInner = document.getElementById('carousel-inner');
+            const indicators = document.getElementById('carousel-indicators');
+            
+            carouselInner.innerHTML = '';
+            indicators.innerHTML = '';
+            
+            if (photos.length === 0) {
+                // Se não houver fotos, mostrar uma mensagem
+                carouselInner.innerHTML = '<div class="carousel-item"><p style="text-align: center; padding: 50px;">Nenhuma foto adicionada ainda</p></div>';
+                return;
+            }
+            
+            // Criar itens do carrossel
+            photos.forEach((photo, index) => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                
+                item.innerHTML = `
+                    <img src="${photo.image}" alt="${photo.caption}" class="carousel-img">
+                    <div class="carousel-caption">
+                        <p>${photo.caption}</p>
+                        <div class="photo-date">Adicionado em ${new Date(photo.date).toLocaleDateString()}</div>
+                    </div>
+                `;
+                
+                carouselInner.appendChild(item);
+                
+                // Criar indicadores
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.setAttribute('data-index', index);
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicators.appendChild(indicator);
+            });
+            
+            updateCarouselPosition();
+        }
+        
+        // Atualizar a posição do carrossel
+        function updateCarouselPosition() {
+            const carouselInner = document.getElementById('carousel-inner');
+            carouselInner.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+            
+            // Atualizar indicadores ativos
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                if (index === currentCarouselIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        // Navegar para um slide específico
+        function goToSlide(index) {
+            if (index >= 0 && index < photos.length) {
+                currentCarouselIndex = index;
+                updateCarouselPosition();
+            }
+        }
+        
+        // Avançar para o próximo slide
+        function nextSlide() {
+            if (photos.length === 0) return;
+            
+            currentCarouselIndex = (currentCarouselIndex + 1) % photos.length;
+            updateCarouselPosition();
+        }
+        
+        // Voltar para o slide anterior
+        function prevSlide() {
+            if (photos.length === 0) return;
+            
+            currentCarouselIndex = (currentCarouselIndex - 1 + photos.length) % photos.length;
+            updateCarouselPosition();
+        }
+        
+        // Configurar autoplay para o carrossel
+        let carouselInterval;
+        
+        function startCarouselAutoplay() {
+            if (photos.length > 1) {
+                carouselInterval = setInterval(nextSlide, 5000);
+            }
+        }
+        
+        function stopCarouselAutoplay() {
+            clearInterval(carouselInterval);
+        }
+        
+        // ==============================================
+        // GERENCIAMENTO DA GALERIA DE FOTOS
+        // ==============================================
+        
+        // Função para renderizar a galeria de fotos
         function renderGallery() {
             const gallery = document.getElementById('photo-gallery');
             gallery.innerHTML = '';
+            
+            if (photos.length === 0) {
+                gallery.innerHTML = '<p style="text-align: center; width: 100%;">Nenhuma foto adicionada ainda</p>';
+                return;
+            }
             
             photos.forEach((photo, index) => {
                 const card = document.createElement('div');
@@ -395,6 +669,7 @@
             });
         }
         
+        // Função para adicionar uma nova foto
         function addPhoto(imageData, caption) {
             const newPhoto = {
                 image: imageData,
@@ -403,90 +678,157 @@
             };
             
             photos.unshift(newPhoto); // Adicionar no início do array
-            localStorage.setItem('gallery-photos', JSON.stringify(photos));
+            savePhotos();
+            
+            // Atualizar exibições
             renderGallery();
+            renderCarousel();
+            
+            // Reiniciar autoplay se necessário
+            stopCarouselAutoplay();
+            startCarouselAutoplay();
+            
+            // Resetar para o primeiro slide
+            currentCarouselIndex = 0;
+            updateCarouselPosition();
         }
         
+        // Função para editar uma foto existente
         function editPhoto(index) {
             const photo = photos[index];
             const newCaption = prompt('Editar legenda:', photo.caption);
             
             if (newCaption !== null && newCaption.trim() !== '') {
                 photos[index].caption = newCaption.trim();
-                localStorage.setItem('gallery-photos', JSON.stringify(photos));
+                savePhotos();
                 renderGallery();
+                renderCarousel();
             }
         }
         
+        // Função para excluir uma foto
         function deletePhoto(index) {
             if (confirm('Tem certeza que deseja excluir esta foto?')) {
                 photos.splice(index, 1);
-                localStorage.setItem('gallery-photos', JSON.stringify(photos));
+                savePhotos();
+                
+                // Ajustar o índice do carrossel se necessário
+                if (currentCarouselIndex >= photos.length) {
+                    currentCarouselIndex = Math.max(0, photos.length - 1);
+                }
+                
                 renderGallery();
+                renderCarousel();
+                
+                // Reiniciar autoplay se necessário
+                stopCarouselAutoplay();
+                startCarouselAutoplay();
             }
         }
         
-        // Manipular envio do formulário
+        // Salvar fotos no localStorage
+        function savePhotos() {
+            localStorage.setItem('gallery-photos', JSON.stringify(photos));
+        }
         
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('photo-upload');
-    const captionInput = document.getElementById('photo-caption');
-    const uploadBtn = document.getElementById('upload-btn');
-
-    let droppedFile = null;
-
-    // Clique na área abre o seletor
-    dropArea.addEventListener('click', () => fileInput.click());
-
-    // Arraste para dentro da área
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropArea.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            dropArea.classList.add('dragover');
-        }, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropArea.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            dropArea.classList.remove('dragover');
-        }, false);
-    });
-
-    dropArea.addEventListener('drop', (e) => {
-        const files = e.dataTransfer.files;
-        if (files.length > 0 && files[0].type.startsWith('image/')) {
-            droppedFile = files[0];
-        }
-    });
-
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            droppedFile = e.target.files[0];
-        }
-    });
-
-    uploadBtn.addEventListener('click', () => {
-        if (!droppedFile) {
-            alert('Por favor, selecione ou arraste uma imagem.');
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            addPhoto(e.target.result, captionInput.value);
-            droppedFile = null;
-            fileInput.value = '';
-            captionInput.value = '';
-        };
-        reader.readAsDataURL(droppedFile);
-    });
-
-
+        // ==============================================
+        // GERENCIAMENTO DO UPLOAD DE FOTOS
+        // ==============================================
         
-        // Inicializar
+        // Elementos do formulário de upload
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('photo-upload');
+        const captionInput = document.getElementById('photo-caption');
+        const uploadBtn = document.getElementById('upload-btn');
+        
+        // Variável para armazenar o arquivo arrastado/selecionado
+        let droppedFile = null;
+        
+        // Clique na área abre o seletor de arquivos
+        dropArea.addEventListener('click', () => fileInput.click());
+        
+        // Eventos de arrastar e soltar
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropArea.classList.add('dragover');
+            }, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropArea.classList.remove('dragover');
+            }, false);
+        });
+        
+        // Quando o arquivo é solto na área
+        dropArea.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('image/')) {
+                droppedFile = files[0];
+            }
+        });
+        
+        // Quando um arquivo é selecionado via input
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                droppedFile = e.target.files[0];
+            }
+        });
+        
+        // Quando o botão de upload é clicado
+        uploadBtn.addEventListener('click', () => {
+            if (!droppedFile) {
+                alert('Por favor, selecione ou arraste uma imagem.');
+                return;
+            }
+            
+            const caption = captionInput.value.trim();
+            if (!caption) {
+                alert('Por favor, adicione uma legenda para a foto.');
+                return;
+            }
+            
+            // Ler o arquivo como URL de dados
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                addPhoto(e.target.result, caption);
+                
+                // Limpar o formulário
+                droppedFile = null;
+                fileInput.value = '';
+                captionInput.value = '';
+            };
+            reader.readAsDataURL(droppedFile);
+        });
+        
+        // ==============================================
+        // INICIALIZAÇÃO
+        // ==============================================
+        
+        // Configurar navegação do carrossel
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            stopCarouselAutoplay();
+            prevSlide();
+            startCarouselAutoplay();
+        });
+        
+        document.getElementById('next-btn').addEventListener('click', () => {
+            stopCarouselAutoplay();
+            nextSlide();
+            startCarouselAutoplay();
+        });
+        
+        // Pausar autoplay quando o mouse está sobre o carrossel
+        document.getElementById('featured-carousel').addEventListener('mouseenter', stopCarouselAutoplay);
+        document.getElementById('featured-carousel').addEventListener('mouseleave', startCarouselAutoplay);
+        
+        // Inicializar elementos da página
         createFallingElements();
+        renderCarousel();
         renderGallery();
+        startCarouselAutoplay();
     </script>
 </body>
 </html>
